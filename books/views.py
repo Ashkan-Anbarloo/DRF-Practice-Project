@@ -21,11 +21,18 @@ class BookApiView(APIView):
         return Response(serializer.data)
     
     def post(self , request):
-        title = request.data.get('title')
-        author = request.data.get('author')
-        year = request.data.get('year')
-        if not all([title , author , year]):
-            return Response({'error':"تمام فیلد ها الزلمی است ."},status=status.HTTP_400_BAD_REQUEST)
+        # title = request.data.get('title')
+        # author = request.data.get('author')
+        # year = request.data.get('year')
+        # if not all([title , author , year]):
+        #     return Response({'error':"تمام فیلد ها الزلمی است ."},status=status.HTTP_400_BAD_REQUEST)
         
-        book = Book.objects.create(title=title , author=author , year=int(year))
-        return Response({'id':book.id , 'title':book.title , 'author':book.author , 'year':book.year} , status=status.HTTP_201_CREATED)
+        # book = Book.objects.create(title=title , author=author , year=int(year))
+        # return Response({'id':book.id , 'title':book.title , 'author':book.author , 'year':book.year} , status=status.HTTP_201_CREATED)
+        serializer = BookSerializer(data=request.data)
+
+        if serializer.is_valid():
+            data = serializer.validated_data
+            book = Book.objects.create(**data)
+            return Response(BookSerializer(book).data , status=status.HTTP_201_CREATED)
+        return Response(serializer.errors , status=status.HTTP_400_BAD_REQUEST)

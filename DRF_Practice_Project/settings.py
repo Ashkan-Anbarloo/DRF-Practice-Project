@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog_api.apps.BlogApiConfig',
     'books.apps.BooksConfig',
+    'vip_user.apps.VipUserConfig',
     'rest_framework',
 ]
 
