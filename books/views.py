@@ -3,21 +3,22 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Book
 from rest_framework import status
-
+from .serializer import BookSerializer
 # Create your views here.
 
 class BookApiView(APIView):
     def get(self , request):
         books = Book.objects.all()
-        data = []
-        for book in books :
-            data.append({
-                'id':book.id,
-                'title':book.title,
-                'author':book.author,
-                'year':book.year,
-            })
-        return Response(data)
+        # data = []
+        # for book in books :
+        #     data.append({
+        #         'id':book.id,
+        #         'title':book.title,
+        #         'author':book.author,
+        #         'year':book.year,
+        #     })
+        serializer = BookSerializer(books , many=True)
+        return Response(serializer.data)
     
     def post(self , request):
         title = request.data.get('title')
