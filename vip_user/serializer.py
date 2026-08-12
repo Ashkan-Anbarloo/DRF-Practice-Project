@@ -40,20 +40,29 @@ import re
 #         if data.get('age') < 18 :
 #             raise serializers.ValidationError('Age must be grater than 18') 
 #         return data
-    
+
+
+# def age_vali(value):
+#     if value['age'] < 18:
+#         raise serializers.ValidationError({'age':'سن باید بیشتر از 18 باشد.'})
+
+
+class MyValidator:
+    def __call__(self, data):
+        age = data.get("age")
+        if age < 18:
+            raise serializers.ValidationError({'age':'سن باید بیشتر از 18 باشد.'})
+
 class VipUserSerializer(serializers.ModelSerializer):
+    full_age = serializers.SerializerMethodField()
+    # age = serializers.IntegerField(validators=[MyValidator()])
     class Meta:
         model = VipUser
-        fields = '__all__'  # fields = ['username' , 'email']
-        # exclude = ['id']
-        #-------------------------------
-    def validate_phone(self , phone):
-        pattern = r"^09\d{9}$"
-        if not re.match(pattern , phone):
-            raise serializers.ValidationError('phone number is not OK :( ')
-        return phone
-    
-    def validate(self, data):
-        if data.get('age') < 18 :
-            raise serializers.ValidationError('Age must be grater than 18') 
-        return data
+        fields = '__all__' 
+        validators = [
+            # age_vali
+            MyValidator()
+        ]
+
+    def get_full_age(self ,obj):
+        return f'{obj.username} {obj.age}'
