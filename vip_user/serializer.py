@@ -8,7 +8,7 @@ import re
 #     email = serializers.CharField(max_length=120)
 #     age = serializers.IntegerField()
 #     phone = serializers.CharField(max_length=11)
-# #در این تابع میتوانیم خروجی رو تایین کنیم و حتی میتونیم نکات مهم و حتی امنیتی در این قسمت بررسی کنیم مثل تعدا حروف و ارقام و ...
+# #در این تابع میتوانیم خروجی رو تعیین کنیم و حتی میتونیم نکات مهم و حتی امنیتی در این قسمت بررسی کنیم مثل تعدا حروف و ارقام و ...
 #     # def to_internal_value(self, data):
 #     #     return {
 #     #         'username':data.get('username').title(),
@@ -46,3 +46,14 @@ class VipUserSerializer(serializers.ModelSerializer):
         model = VipUser
         fields = '__all__'  # fields = ['username' , 'email']
         # exclude = ['id']
+        #-------------------------------
+    def validate_phone(self , phone):
+        pattern = r"^09\d{9}$"
+        if not re.match(pattern , phone):
+            raise serializers.ValidationError('phone number is not OK :( ')
+        return phone
+    
+    def validate(self, data):
+        if data.get('age') < 18 :
+            raise serializers.ValidationError('Age must be grater than 18') 
+        return data
