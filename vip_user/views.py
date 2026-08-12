@@ -15,8 +15,10 @@ class VipUserAPIView(APIView):
     def post(self , request):
         serializer = VipUserSerializer(data = request.data)
         if serializer.is_valid():
-            data = serializer.validated_data
-            vip_user = VipUser.objects.create(**data)
+            # data = serializer.validated_data
+            # print(data)
+            serializer.save()
+            # vip_user = VipUser.objects.create(**data)
             return Response({'status':'ok'} , status=status.HTTP_201_CREATED)
         return Response(serializer.errors , status=status.HTTP_404_NOT_FOUND)
 
