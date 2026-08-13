@@ -22,4 +22,5 @@ urlpatterns = [
     path('' , include('blog_api.urls')),
     path('books/' , include('books.urls')),
     path('vip_user/' , include('vip_user.urls')),
+    path('book_shop/' , include('book_shop.urls')),
 ]

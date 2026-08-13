@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog_api.apps.BlogApiConfig',
     'books.apps.BooksConfig',
     'vip_user.apps.VipUserConfig',
+    'book_shop.apps.BookShopConfig',
     'rest_framework',
 ]
 
