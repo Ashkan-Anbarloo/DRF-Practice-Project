@@ -15,7 +15,7 @@ class Category(models.Model):
     
 class Book(models.Model):
     title = models.CharField(max_length=125)
-    author = models.ForeignKey(Author , on_delete=models.CASCADE , related_name='books')
+    author = models.ForeignKey(User , on_delete=models.CASCADE , related_name='books')
     category = models.ManyToManyField(Category , related_name='books')
     publication_date = models.IntegerField()
 
