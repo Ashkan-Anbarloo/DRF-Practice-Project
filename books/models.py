@@ -7,5 +7,9 @@ class Book(models.Model):
     author = models.CharField(max_length=250)
     year = models.IntegerField()
 
+    class Meta:
+        verbose_name = "کتاب"
+        verbose_name_plural = "کتاب‌ها"
+    
     def __str__(self):
         return self.title

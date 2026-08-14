@@ -20,6 +20,7 @@ class BookApiView(APIView):
         serializer = BookSerializer(books , many=True)
         return Response(serializer.data)
     
+    #create
     def post(self , request):
         # title = request.data.get('title')
         # author = request.data.get('author')
