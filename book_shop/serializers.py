@@ -14,7 +14,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class BookSerializer(serializers.ModelSerializer):
     # author = AuthorSerializer()
-    # category = CategorySerializer(many=True)
+    category = CategorySerializer(many=True)
     #-------------------
     # author = serializers.SlugRelatedField(slug_field='name' , queryset=Author.objects.all())
     # category = serializers.SlugRelatedField(slug_field='title' , queryset=Category.objects.all() , many=True)

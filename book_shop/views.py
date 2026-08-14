@@ -16,7 +16,7 @@ class BookApiView(APIView):
         return Response(serializer.data)
     
 class UserInfoApiView(APIView):
-    permission_classes = [BlocklistPermissions]
+    permission_classes = [IsAuthenticated] #BlocklistPermissions
     def get(self , request):
         user = request.user
         return Response({
