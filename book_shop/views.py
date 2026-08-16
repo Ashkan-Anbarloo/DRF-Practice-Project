@@ -7,7 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from .permissions import BlocklistPermissions , BookPermissions
 from rest_framework import status
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken , BlacklistedToken
-from rest_framework.generics import ListAPIView , ListCreateAPIView
+from rest_framework.generics import ListAPIView , ListCreateAPIView , GenericAPIView
+from rest_framework.viewsets import ModelViewSet
 # Create your views here.
 
 
@@ -18,7 +19,7 @@ class BookApiView(APIView):
         return Response(serializer.data)
 
 
-class BookListView(ListCreateAPIView):
+class BookListView(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
