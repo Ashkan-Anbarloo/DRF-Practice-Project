@@ -18,6 +18,7 @@ class Book(models.Model):
     author = models.ForeignKey(User , on_delete=models.CASCADE , related_name='books')
     category = models.ManyToManyField(Category , related_name='books' , null=True , blank=True)
     publication_date = models.IntegerField()
+    image = models.ImageField(upload_to='images/' , null=True , blank=True)
 
     def __str__(self):
         return self.title

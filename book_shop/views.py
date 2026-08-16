@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken , BlacklistedToken
 from rest_framework.generics import ListAPIView , ListCreateAPIView , GenericAPIView
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.parsers import MultiPartParser, FormParser
 # Create your views here.
 
 
@@ -17,11 +18,30 @@ class BookApiView(APIView):
         books = Book.objects.all()
         serializer = BookSerializer(books , many=True)
         return Response(serializer.data)
+    
+    
 
 
 class BookListView(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+
+
+# class BookListView(APIView):
+#     parser_classes = [MultiPartParser, FormParser]
+#     def get(self , request):
+#         queryset = Book.objects.all()
+#         serializer = BookSerializer(queryset , many=True , context={'request':request})
+#         return Response(serializer.data)
+    
+#     def post(self , request):
+#         serializer = BookSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data , status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors , status=status.HTTP_400_BAD_REQUEST)
+    
 
 class UserInfoApiView(APIView):
     permission_classes = [IsAuthenticated] #BlocklistPermissions
